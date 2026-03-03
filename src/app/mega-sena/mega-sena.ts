@@ -13,22 +13,22 @@ export class MegaSena {
 
   constructor(private formBuilder: FormBuilder) {
     this.megaSenaForm = this.formBuilder.group({
-      megaSenaNumbers: [''],
+      officialNumbers: [''],
       playerNumbers: [''],
     });
   }
 
-  verifyNumbers() {
-    const megaInput = this.megaSenaForm.value?.megaSenaNumbers;
+  checkResult() {
+    const megaInput = this.megaSenaForm.value?.officialNumbers;
     const playerInput = this.megaSenaForm.value?.playerNumbers;
 
-    const result = this.parseInput(megaInput);
-    const game = this.parseInput(playerInput);
+    const result = this.processInput(megaInput);
+    const game = this.processInput(playerInput);
 
     this.response = this.returnResult(result, game);
   }
 
-  parseInput(input: string): number[] {
+  processInput(input: string): number[] {
     const parts = input.split(',');
     const numbers: number[] = [];
 
@@ -68,7 +68,7 @@ export class MegaSena {
     return true;
   }
 
-  countMatches(result: number[], game: number[]): string {
+  checkPrize(result: number[], game: number[]): string {
     let count = 0;
 
     for (let g = 0; g < game.length; g++) {
@@ -114,6 +114,6 @@ export class MegaSena {
       return "The numbers must be between 1 and 60.";
     }
 
-    return this.countMatches(result, game);
+    return this.checkPrize(result, game);
   }
 }
